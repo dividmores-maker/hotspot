@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صافي - تسجيل الدخول</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Tahoma,Arial,sans-serif;background:#2D1B69;}
+.wrap{min-height:100%;display:table;width:100%;}
+.inner{display:table-cell;vertical-align:middle;padding:20px;}
+.card{width:100%;max-width:400px;margin:0 auto;background:#3d2888;border:1px solid #F5C842;border-radius:12px;padding:32px 28px;box-shadow:0 8px 32px #000;}
+.logo-ring{width:72px;height:72px;border-radius:50%;background:#F5C842;margin:0 auto 12px;display:table;text-align:center;}
+.logo-ring svg{display:inline-block;vertical-align:middle;margin-top:16px;}
+.brand{font-size:28px;font-weight:bold;color:#fff;text-align:center;letter-spacing:2px;}
+.brand span{color:#F5C842;}
+.sub{font-size:12px;color:rgba(255,255,255,0.6);text-align:center;margin-top:3px;}
+.divider{border:none;border-top:1px solid rgba(245,200,66,0.3);margin:20px 0;}
+.err-banner{background:rgba(255,80,80,0.2);border:1px solid rgba(255,80,80,0.5);border-radius:8px;color:#ffaaaa;font-size:13px;text-align:center;padding:10px 14px;margin-bottom:14px;}
+label{display:block;font-size:13px;font-weight:bold;color:#F5C842;margin-bottom:6px;}
+input[type=text],input[type=password]{width:100%;height:44px;background:rgba(255,255,255,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:8px;color:#fff;font-family:Tahoma,Arial,sans-serif;font-size:14px;padding:0 12px;text-align:right;outline:none;margin-bottom:14px;}
+input[type=text]:focus,input[type=password]:focus{border-color:#F5C842;}
+.btn{width:100%;height:48px;background:#F5C842;border:none;border-radius:10px;color:#2D1B69;font-family:Tahoma,Arial,sans-serif;font-size:16px;font-weight:bold;cursor:pointer;margin-top:4px;}
+.btn:hover{background:#D4A017;}
+.btn:disabled{opacity:0.5;cursor:default;}
+.err{display:none;background:rgba(255,80,80,0.2);border:1px solid rgba(255,80,80,0.5);border-radius:8px;color:#ffaaaa;font-size:13px;text-align:center;padding:9px 12px;margin-top:10px;}
+.err.show{display:block;}
+.lock{display:none;background:rgba(255,80,80,0.2);border:1px solid rgba(255,80,80,0.5);border-radius:8px;color:#ffaaaa;font-size:13px;font-weight:bold;text-align:center;padding:10px 12px;margin-top:10px;}
+.lock.show{display:block;}
+.footer{margin-top:20px;text-align:center;color:rgba(255,255,255,0.25);font-size:11px;}
+.footer span{color:#F5C842;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+<div class="card">
+
+  <div class="logo-ring">
+    <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+      <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <path d="M20 12C15.582 12 12 15.582 12 20C12 24.418 15.582 28 20 28C24.418 28 28 24.418 28 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="4" fill="#2D1B69"/>
+      <path d="M34 6L34 14M34 14L26 14M34 14L28 8" stroke="#2D1B69" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="brand">ص<span>ا</span>في</div>
+  <div class="sub">بوابة الإنترنت اللاسلكي</div>
+  <hr class="divider">
+
+  <!-- $(if error) -->
+  <div class="err-banner"> $(error)</div>
+  <!-- $(endif) -->
+
+  <form name="sendin" id="frm" action="$(link-login-only)" method="post" onsubmit="return go(event)" autocomplete="off">
+    <input type="hidden" name="dst"   value="$(link-orig)"/>
+    <input type="hidden" name="popup" value="true"/>
+    <label for="un">اسم المستخدم</label>
+    <input type="text"     id="un" name="username" value="$(username)" placeholder="أدخل اسم المستخدم" autocomplete="off"/>
+    <label for="pw">كلمة المرور</label>
+    <input type="password" id="pw" name="password" placeholder="أدخل كلمة المرور" autocomplete="off"/>
+    <div class="err"  id="em"></div>
+    <div class="lock" id="lm">[!] تجاوزت عدد المحاولات - انتظر <span id="cd">30</span> ثانية</div>
+    <button type="submit" class="btn" id="btn">دخول &rarr;</button>
+  </form>
+
+  <div class="footer">مدعوم بواسطة <span>MikroTik</span> &middot; شبكة <span>صافي</span></div>
+</div>
+</div></div>
+<script>
+var att=0,lkd=false,tmr;
+function go(e){
+  if(lkd){e.preventDefault();return false;}
+  var u=document.getElementById('un').value,
+      p=document.getElementById('pw').value,
+      em=document.getElementById('em'),
+      lm=document.getElementById('lm'),
+      btn=document.getElementById('btn');
+  em.className='err';
+  if(!u||!p){e.preventDefault();em.innerHTML='[!] يرجى ملء جميع الحقول';em.className='err show';return false;}
+  att++;
+  if(att>=5){
+    e.preventDefault();lkd=true;btn.disabled=true;
+    em.className='err';lm.className='lock show';
+    var r=30;document.getElementById('cd').innerHTML=r;
+    tmr=setInterval(function(){r--;document.getElementById('cd').innerHTML=r;
+      if(r<=0){clearInterval(tmr);lkd=false;att=0;btn.disabled=false;lm.className='lock';}
+    },1000);
+    return false;
+  }
+  btn.innerHTML=' جاري الدخول...';btn.disabled=true;
+  return true;
+}
+</script>
+</body>
+</html>

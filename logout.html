@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صافي - تسجيل الخروج</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Tahoma,Arial,sans-serif;background:#2D1B69;}
+.wrap{min-height:100%;display:table;width:100%;}
+.inner{display:table-cell;vertical-align:middle;padding:20px;}
+.card{width:100%;max-width:400px;margin:0 auto;background:#3d2888;border:1px solid #F5C842;border-radius:12px;padding:32px 28px;box-shadow:0 8px 32px #000;text-align:center;}
+.logo-ring{width:72px;height:72px;border-radius:50%;background:#F5C842;margin:0 auto 12px;display:table;}
+.logo-ring svg{display:inline-block;vertical-align:middle;margin-top:16px;}
+.brand{font-size:28px;font-weight:bold;color:#fff;letter-spacing:2px;}
+.brand span{color:#F5C842;}
+.sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px;}
+.divider{border:none;border-top:1px solid rgba(245,200,66,0.3);margin:18px 0;}
+.bye{font-size:36px;margin-bottom:10px;}
+.title{font-size:18px;font-weight:bold;color:#fff;margin-bottom:4px;}
+.subtitle{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:18px;}
+.user-box{background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:14px;font-weight:bold;color:#fff;}
+.grid{display:table;width:100%;border-collapse:separate;border-spacing:6px;margin-bottom:16px;}
+.grid-row{display:table-row;}
+.grid-cell{display:table-cell;width:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(245,200,66,0.12);border-radius:8px;padding:10px 6px;text-align:center;vertical-align:middle;}
+.g-icon{font-size:18px;display:block;margin-bottom:4px;}
+.g-val{font-size:14px;font-weight:bold;color:#F5C842;display:block;}
+.g-lbl{font-size:10px;color:rgba(255,255,255,0.5);display:block;margin-top:2px;}
+.cd-wrap{margin-bottom:14px;}
+.cd-txt{font-size:12px;color:rgba(255,255,255,0.5);}
+.cd-num{font-size:26px;font-weight:bold;color:#F5C842;}
+.btn{display:block;width:100%;height:48px;background:#F5C842;border:none;border-radius:10px;color:#2D1B69;font-family:Tahoma,Arial,sans-serif;font-size:16px;font-weight:bold;cursor:pointer;text-decoration:none;line-height:48px;}
+.btn:hover{background:#D4A017;}
+.footer{margin-top:18px;color:rgba(255,255,255,0.2);font-size:11px;}
+.footer span{color:#F5C842;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+<div class="card">
+
+  <div class="logo-ring">
+    <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+      <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <path d="M20 12C15.582 12 12 15.582 12 20C12 24.418 15.582 28 20 28C24.418 28 28 24.418 28 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="4" fill="#2D1B69"/>
+      <path d="M34 6L34 14M34 14L26 14M34 14L28 8" stroke="#2D1B69" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="brand">ص<span>ا</span>في</div>
+  <div class="sub">بوابة الإنترنت اللاسلكي</div>
+  <hr class="divider">
+
+  <div class="bye"></div>
+  <div class="title">شكراً لاستخدامك صافي</div>
+  <div class="subtitle">تم تسجيل خروجك بنجاح</div>
+
+  <div class="user-box"> $(username)</div>
+
+  <div class="grid">
+    <div class="grid-row">
+      <div class="grid-cell"><span class="g-icon"></span><span class="g-val" id="st">$(session-time)</span><span class="g-lbl">مدة الجلسة</span></div>
+      <div class="grid-cell"><span class="g-icon"></span><span class="g-val" id="tot">-</span><span class="g-lbl">إجمالي البيانات</span></div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-cell" style="padding-top:6px;"><span class="g-icon">[v]</span><span class="g-val" id="bi">$(bytes-in)</span><span class="g-lbl">وارد</span></div>
+      <div class="grid-cell" style="padding-top:6px;"><span class="g-icon">[^]</span><span class="g-val" id="bo">$(bytes-out)</span><span class="g-lbl">صادر</span></div>
+    </div>
+  </div>
+
+  <div class="cd-wrap">
+    <div class="cd-txt">العودة لصفحة الدخول خلال</div>
+    <div class="cd-num" id="cdn">10</div>
+  </div>
+
+  <a class="btn" href="$(link-login)"> تسجيل الدخول مجدداً</a>
+
+  <div class="footer">مدعوم بواسطة <span>MikroTik</span> &middot; شبكة <span>صافي</span></div>
+</div>
+</div></div>
+<script>
+function fmt(b){
+  b=parseInt((b||'').replace(/[^0-9]/g,''),10)||0;
+  if(b>=1073741824)return (b/1073741824).toFixed(2)+' GB';
+  if(b>=1048576)return (b/1048576).toFixed(1)+' MB';
+  if(b>=1024)return (b/1024).toFixed(0)+' KB';
+  return b+' B';
+}
+(function(){
+  var bi=document.getElementById('bi'),bo=document.getElementById('bo');
+  if(!bi.innerHTML.indexOf('$')==-1){
+    var ib=parseInt(bi.innerHTML,10)||0,ob=parseInt(bo.innerHTML,10)||0;
+    bi.innerHTML=fmt(bi.innerHTML);bo.innerHTML=fmt(bo.innerHTML);
+    document.getElementById('tot').innerHTML=fmt(String(ib+ob));
+  }
+})();
+var cd=10,el=document.getElementById('cdn');
+var t=setInterval(function(){cd--;el.innerHTML=cd;if(cd<=0){clearInterval(t);location.href='$(link-login)';}},1000);
+</script>
+</body>
+</html>

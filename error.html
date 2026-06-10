@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صافي - خطأ</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Tahoma,Arial,sans-serif;background:#2D1B69;}
+.wrap{min-height:100%;display:table;width:100%;}
+.inner{display:table-cell;vertical-align:middle;padding:20px;}
+.card{width:100%;max-width:400px;margin:0 auto;background:#3d2888;border:1px solid rgba(255,80,80,0.4);border-radius:12px;padding:32px 28px;box-shadow:0 8px 32px #000;text-align:center;}
+.logo-ring{width:66px;height:66px;border-radius:50%;background:#F5C842;margin:0 auto 10px;display:table;text-align:center;}
+.logo-ring svg{display:inline-block;vertical-align:middle;margin-top:14px;}
+.brand{font-size:26px;font-weight:bold;color:#fff;letter-spacing:2px;}
+.brand span{color:#F5C842;}
+.sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px;}
+.divider{border:none;border-top:1px solid rgba(255,80,80,0.25);margin:16px 0;}
+.err-icon{font-size:48px;margin-bottom:10px;}
+.err-title{font-size:18px;font-weight:bold;color:#fff;margin-bottom:6px;}
+.err-sub{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;}
+.err-box{background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);border-radius:8px;padding:12px 14px;margin-bottom:16px;text-align:right;}
+.err-lbl{font-size:11px;font-weight:bold;color:rgba(255,80,80,0.8);margin-bottom:6px;}
+.err-msg{font-size:13px;color:#ffaaaa;line-height:1.6;word-break:break-word;}
+.device-row{display:table;width:100%;border-collapse:separate;border-spacing:6px;margin-bottom:16px;}
+.device-cell{display:table-cell;width:50%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px;text-align:center;font-size:10px;color:rgba(255,255,255,0.5);}
+.device-cell b{display:block;font-size:11px;color:rgba(255,255,255,0.7);word-break:break-all;}
+.btn{display:block;height:48px;background:#F5C842;border:none;border-radius:10px;color:#2D1B69;font-family:Tahoma,Arial,sans-serif;font-size:16px;font-weight:bold;text-align:center;line-height:48px;text-decoration:none;}
+.btn:hover{background:#D4A017;}
+.cd-txt{margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);}
+.cd-num{color:#F5C842;font-weight:bold;}
+.footer{margin-top:16px;color:rgba(255,255,255,0.2);font-size:11px;}
+.footer span{color:#F5C842;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+<div class="card">
+
+  <div class="logo-ring">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+      <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <path d="M20 12C15.582 12 12 15.582 12 20C12 24.418 15.582 28 20 28C24.418 28 28 24.418 28 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="4" fill="#2D1B69"/>
+      <path d="M34 6L34 14M34 14L26 14M34 14L28 8" stroke="#2D1B69" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="brand">ص<span>ا</span>في</div>
+  <div class="sub">بوابة الإنترنت اللاسلكي</div>
+  <hr class="divider">
+
+  <div class="err-icon">[!]</div>
+  <div class="err-title">حدث خطأ في الاتصال</div>
+  <div class="err-sub">تعذّر إتمام العملية، يرجى المحاولة مجدداً</div>
+
+  <div class="err-box">
+    <div class="err-lbl">تفاصيل الخطأ</div>
+    <div class="err-msg" id="ed">$(error-orig)</div>
+  </div>
+
+  <div class="device-row">
+    <div class="device-cell" id="ipCell"> IP<b id="dip">$(ip)</b></div>
+    <div class="device-cell" id="macCell"> MAC<b id="dmac">$(mac)</b></div>
+  </div>
+
+  <a class="btn" href="$(link-login)"> العودة لتسجيل الدخول</a>
+
+  <div class="cd-txt">انتقال تلقائي خلال <span class="cd-num" id="cdn">15</span> ثانية</div>
+  <div class="footer">مدعوم بواسطة <span>MikroTik</span> &middot; شبكة <span>صافي</span></div>
+</div>
+</div></div>
+<script>
+(function(){
+  var ed=document.getElementById('ed');
+  if(ed.innerHTML.indexOf('$(')!=-1||ed.innerHTML.trim()==='')
+    ed.innerHTML='حدث خطأ غير محدد، يرجى المحاولة مرة أخرى.';
+  var ip=document.getElementById('dip');
+  if(ip&&ip.innerHTML.indexOf('$')!=-1){
+    document.getElementById('ipCell').style.display='none';
+    document.getElementById('macCell').style.display='none';
+  }
+})();
+var cd=15,el=document.getElementById('cdn');
+var t=setInterval(function(){cd--;el.innerHTML=cd;if(cd<=0){clearInterval(t);location.href='$(link-login)';}},1000);
+</script>
+</body>
+</html>
