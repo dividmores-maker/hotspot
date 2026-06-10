@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صافي - بوابة الإنترنت</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Tahoma,Arial,sans-serif;background:#2D1B69;}
+.wrap{min-height:100%;display:table;width:100%;}
+.inner{display:table-cell;vertical-align:middle;padding:20px;}
+.card{width:100%;max-width:400px;margin:0 auto;background:#3d2888;border:1px solid #F5C842;border-radius:12px;padding:32px 28px;box-shadow:0 8px 32px #000;}
+.logo-ring{width:72px;height:72px;border-radius:50%;background:#F5C842;margin:0 auto 12px;display:table;text-align:center;}
+.logo-ring svg{display:inline-block;vertical-align:middle;margin-top:16px;}
+.brand{font-size:28px;font-weight:bold;color:#fff;text-align:center;letter-spacing:2px;}
+.brand span{color:#F5C842;}
+.sub{font-size:12px;color:rgba(255,255,255,0.6);text-align:center;margin-top:3px;}
+.divider{border:none;border-top:1px solid rgba(245,200,66,0.3);margin:20px 0;}
+label{display:block;font-size:13px;font-weight:bold;color:#F5C842;margin-bottom:6px;}
+input[type=text],input[type=password]{width:100%;height:44px;background:rgba(255,255,255,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:8px;color:#fff;font-family:Tahoma,Arial,sans-serif;font-size:14px;padding:0 12px;text-align:right;outline:none;margin-bottom:14px;}
+input[type=text]:focus,input[type=password]:focus{border-color:#F5C842;background:rgba(255,255,255,0.15);}
+.btn{width:100%;height:48px;background:#F5C842;border:none;border-radius:10px;color:#2D1B69;font-family:Tahoma,Arial,sans-serif;font-size:16px;font-weight:bold;cursor:pointer;margin-top:4px;}
+.btn:hover{background:#D4A017;}
+.btn:disabled{opacity:0.6;cursor:default;}
+.err{display:none;background:rgba(255,80,80,0.2);border:1px solid rgba(255,80,80,0.5);border-radius:8px;color:#ffaaaa;font-size:13px;text-align:center;padding:9px 12px;margin-top:10px;}
+.err.show{display:block;}
+/* status card */
+.status-card{display:none;width:100%;max-width:400px;margin:0 auto;background:#3d2888;border:1px solid #F5C842;border-radius:12px;padding:28px 24px;box-shadow:0 8px 32px #000;text-align:center;}
+.status-card.show{display:block;}
+.badge{display:inline-block;background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.4);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:bold;color:#4ADE80;margin-bottom:14px;}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ADE80;margin-left:5px;vertical-align:middle;}
+.user-box{background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.15);border-radius:8px;padding:10px 14px;margin-bottom:14px;text-align:right;}
+.user-name{font-size:14px;font-weight:bold;color:#fff;}
+.user-ip{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.grid{display:table;width:100%;border-collapse:separate;border-spacing:6px;margin-bottom:14px;}
+.grid-row{display:table-row;}
+.grid-cell{display:table-cell;width:50%;background:rgba(255,255,255,0.04);border:1px solid rgba(245,200,66,0.1);border-radius:8px;padding:10px 6px;text-align:center;vertical-align:middle;}
+.g-val{font-size:14px;font-weight:bold;color:#F5C842;display:block;}
+.g-lbl{font-size:10px;color:rgba(255,255,255,0.5);display:block;margin-top:2px;}
+.btn-row{display:table;width:100%;border-collapse:separate;border-spacing:8px;margin-top:8px;}
+.btn-cell{display:table-cell;width:50%;}
+.btn-ref{display:block;height:42px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.25);border-radius:8px;color:#F5C842;font-family:Tahoma,Arial,sans-serif;font-size:13px;font-weight:bold;text-align:center;line-height:42px;text-decoration:none;cursor:pointer;}
+.btn-ref:hover{background:rgba(245,200,66,0.18);}
+.btn-out{display:block;height:42px;background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.3);border-radius:8px;color:#FF8C7A;font-family:Tahoma,Arial,sans-serif;font-size:13px;font-weight:bold;text-align:center;line-height:42px;cursor:pointer;}
+.btn-out:hover{background:rgba(192,57,43,0.25);}
+.footer{margin-top:20px;text-align:center;color:rgba(255,255,255,0.25);font-size:11px;}
+.footer span{color:#F5C842;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+
+  <!-- login card -->
+  <div class="card" id="loginCard">
+    <div class="logo-ring">
+      <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+        <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+        <path d="M20 12C15.582 12 12 15.582 12 20C12 24.418 15.582 28 20 28C24.418 28 28 24.418 28 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="4" fill="#2D1B69"/>
+        <path d="M34 6L34 14M34 14L26 14M34 14L28 8" stroke="#2D1B69" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand">ص<span>ا</span>في</div>
+    <div class="sub">بوابة الإنترنت اللاسلكي</div>
+    <hr class="divider">
+    <form name="login" id="loginForm" autocomplete="off" onsubmit="return doLogin()">
+      <label for="un">اسم المستخدم</label>
+      <input type="text" id="un" name="username" placeholder="أدخل اسم المستخدم" autocomplete="off" improve-input rm-white-spaces to-lower/>
+      <label for="pw">كلمة المرور</label>
+      <input type="password" id="pw" name="password" placeholder="أدخل كلمة المرور" autocomplete="off"/>
+      <div class="err" id="errMsg"></div>
+      <button type="submit" class="btn" id="loginBtn">دخول &rarr;</button>
+    </form>
+    <div class="footer">مدعوم بواسطة <span>MikroTik</span> &middot; شبكة <span>صافي</span></div>
+  </div>
+
+  <!-- status card -->
+  <div class="status-card" id="statusCard">
+    <div class="logo-ring" style="margin-bottom:12px;">
+      <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+        <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+        <path d="M20 12C15.582 12 12 15.582 12 20C12 24.418 15.582 28 20 28C24.418 28 28 24.418 28 20" stroke="#2D1B69" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="4" fill="#2D1B69"/>
+      </svg>
+    </div>
+    <div class="brand" style="margin-bottom:4px;">ص<span style="color:#F5C842;">ا</span>في</div>
+    <div class="sub" style="margin-bottom:14px;">بوابة الإنترنت اللاسلكي</div>
+    <span class="badge"><span class="dot"></span>متصل بالإنترنت</span>
+    <div class="user-box">
+      <div class="user-name" id="s_username">-</div>
+      <div class="user-ip" id="s_ip">-</div>
+    </div>
+    <div class="grid">
+      <div class="grid-row">
+        <div class="grid-cell"><span class="g-val" id="s_uptime">-</span><span class="g-lbl">مدة الجلسة</span></div>
+        <div class="grid-cell"><span class="g-val" id="s_remain">-</span><span class="g-lbl">الوقت المتبقي</span></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"><span class="g-val" id="s_bytes_in">-</span><span class="g-lbl">وارد</span></div>
+        <div class="grid-cell"><span class="g-val" id="s_bytes_out">-</span><span class="g-lbl">صادر</span></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <div class="btn-cell"><div class="btn-ref" onclick="doStatus()">تحديث</div></div>
+      <div class="btn-cell"><div class="btn-out" onclick="doLogout()">خروج</div></div>
+    </div>
+    <div class="footer">مدعوم بواسطة <span>MikroTik</span> &middot; شبكة <span>صافي</span></div>
+  </div>
+
+</div></div>
+<script>
+function fmt(b){
+  b=parseInt(b)||0;
+  if(b>=1073741824)return(b/1073741824).toFixed(2)+' GB';
+  if(b>=1048576)return(b/1048576).toFixed(1)+' MB';
+  if(b>=1024)return(b/1024).toFixed(0)+' KB';
+  return b+' B';
+}
+function fmtTime(t){
+  if(!t||t==='')return '-';
+  var d='',h='',m='',s='';
+  if(t.indexOf('d')>=0){var p=t.split('d');d=p[0]+'د ';t=p[1];}
+  if(t.indexOf('h')>=0){var p=t.split('h');h=p[0]+'س ';t=p[1];}
+  if(t.indexOf('m')>=0){var p=t.split('m');m=p[0]+'ق ';t=p[1];}
+  if(t.indexOf('s')>=0){var p=t.split('s');s=p[0]+'ث';}
+  return d+h+m+s||t;
+}
+function showStatus(){
+  document.getElementById('loginCard').style.display='none';
+  document.getElementById('statusCard').className='status-card show';
+}
+function showLogin(){
+  document.getElementById('statusCard').className='status-card';
+  document.getElementById('loginCard').style.display='block';
+}
+function setErr(msg){
+  var e=document.getElementById('errMsg');
+  e.innerHTML=msg;e.className='err show';
+}
+function clearErr(){
+  var e=document.getElementById('errMsg');
+  e.className='err';
+}
+function get(url,cb){
+  var x=new XMLHttpRequest();
+  x.open('GET',url,true);
+  x.onreadystatechange=function(){
+    if(x.readyState===4){
+      if(x.status>=200&&x.status<400){
+        try{cb(JSON.parse(x.responseText));}catch(e){cb(null);}
+      } else {cb(null);}
+    }
+  };
+  x.send();
+}
+function updateStatus(d){
+  if(!d)return;
+  document.getElementById('s_username').innerText=d.username||'-';
+  document.getElementById('s_ip').innerText='IP: '+(d.ip||'-');
+  document.getElementById('s_uptime').innerText=fmtTime(d.uptime||'');
+  document.getElementById('s_remain').innerText=fmtTime(d.session_time_left||'');
+  document.getElementById('s_bytes_in').innerText=fmt(d.bytes_in||0);
+  document.getElementById('s_bytes_out').innerText=fmt(d.bytes_out||0);
+}
+function doStatus(){
+  get('/status?var=callBack',function(d){
+    if(d&&d.logged_in==='true'){updateStatus(d);showStatus();}
+    else{showLogin();}
+  });
+}
+function doLogin(){
+  var u=document.getElementById('un').value.trim();
+  var p=document.getElementById('pw').value;
+  if(!u){setErr('يرجى إدخال اسم المستخدم');return false;}
+  if(!p){setErr('يرجى إدخال كلمة المرور');return false;}
+  clearErr();
+  var btn=document.getElementById('loginBtn');
+  btn.disabled=true;btn.innerHTML='جاري الدخول...';
+  get('/login?username='+encodeURIComponent(u)+'&password='+encodeURIComponent(p)+'&var=callBack',function(d){
+    btn.disabled=false;btn.innerHTML='دخول &rarr;';
+    if(!d){setErr('تعذر الاتصال، حاول مجدداً');return;}
+    if(d.action==='onLoggedIn'||d.logged_in==='true'){
+      doStatus();
+    } else {
+      setErr(d.error?toArabicError(d.error):'اسم المستخدم أو كلمة المرور غلط');
+    }
+  });
+  return false;
+}
+function doLogout(){
+  get('/logout?var=callBack',function(d){showLogin();});
+}
+function toArabicError(a){
+  if(!a)return 'خطأ في تسجيل الدخول';
+  if(a.indexOf('invalid username')>=0||a.indexOf('not found')>=0)return 'اسم المستخدم أو كلمة المرور غلط';
+  if(a.indexOf('uptime limit')>=0)return 'انتهى الوقت المتاح لهذا الحساب';
+  if(a.indexOf('traffic limit')>=0)return 'انتهى رصيد هذا الحساب';
+  if(a.indexOf('simultaneous')>=0||a.indexOf('no more sessions')>=0)return 'هذا الحساب مستخدم حالياً على جهاز آخر';
+  if(a.indexOf('invalid password')>=0)return 'كلمة المرور غلط';
+  if(a.indexOf('no valid profile')>=0)return 'انتهت صلاحية هذا الحساب';
+  return 'خطأ: '+a;
+}
+// فحص الحالة عند التحميل
+window.onload=function(){doStatus();};
+// تحديث تلقائي كل 30 ثانية
+setInterval(function(){
+  var sc=document.getElementById('statusCard');
+  if(sc.className.indexOf('show')>=0)doStatus();
+},30000);
+</script>
+</body>
+</html>
